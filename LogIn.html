@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login to StudyLab</title>
+    <link rel="stylesheet" href="Login.css" />
+    <script src="https://kit.fontawesome.com/e8e9c02a1b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Login Form Starts -->
+    <div class="main">
+        <div class="outer flex">
+            <div class="right">
+                <div class="details">
+                    <h2 class="login">Login</h2>
+                    <h2 class="hello">Hello, Friends!</h2>
+                    <p>Enter your details and start your journey with us.</p>
+                </div>
+
+                <div class="form">
+                    <form id="loginForm">
+                        <!-- Role Input -->
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <select id="loginRole" class="user1" required>
+                                    <option value="" disabled selected>Select Role</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Coordinator">Coordinator</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <input type="email" id="loginEmail" placeholder="E-mail / Username" class="user1" required />
+                            </div>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div>
+                                <input type="password" id="loginPassword" placeholder="Password" class="password" required />
+                            </div>
+                        </div>
+
+                        <!-- Forgot Password Link -->
+                        <div class="forgot">
+                            <a href="#">Forgot Username/Password?</a>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div class="btn3">
+                            <button type="submit" class="Login-btn">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Form Ends -->
+
+    <script>
+        // Load registered users from localStorage or initialize empty object
+        const users = JSON.parse(localStorage.getItem("users")) || {};
+
+        // Login Form Submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent normal form submission
+
+            // Get login form values
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            const role = document.getElementById("loginRole").value;
+
+            // Validate login credentials
+            if (users[email]) {
+                // Check if password matches
+                if (users[email].password === password && users[email].role === role) {
+                    alert(`Login successful! Welcome, ${users[email].fullName} (${role}).`);
+                    // Redirect user based on their role
+                    if (role === "Admin") {
+                        window.location.href = "Admin.html"; // Replace with your admin dashboard page
+                    } else if (role === "Student") {
+                        window.location.href = "Student.html"; // Replace with your student dashboard page
+                    } else if (role === "Coordinator") {
+                        window.location.href = "Coordinator.html"; // Replace with your coordinator dashboard page
+                    }
+                } else {
+                    alert("Invalid password or role. Please try again.");
+                }
+            } else {
+                alert("User not found! Please register first.");
+            }
+        });
+    </script>
+</body>
+
+</html>

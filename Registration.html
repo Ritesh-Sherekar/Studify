@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register to StudyLab</title>
+    <link rel="stylesheet" href="Registration.css" />
+    <script src="https://kit.fontawesome.com/e8e9c02a1b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="outer flex">
+            <div class="right">
+                <div class="details">
+                    <h2 class="login">Register</h2>
+                    <h2 class="hello">Welcome, Friends!</h2>
+                    <p>Fill out the form to start your journey with us.</p>
+                </div>
+
+                <div class="form">
+                    <form id="registrationForm">
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <input type="text" id="fullName" placeholder="Full Name" class="user1" required />
+                            </div>
+                        </div>
+
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <select id="role" class="user1" required>
+                                    <option value="" disabled selected>Select Role</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Coordinator">Coordinator</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <input type="email" id="email" placeholder="E-mail" class="user1" required />
+                            </div>
+                        </div>
+
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div>
+                                <input type="password" id="password" placeholder="Password" class="password" required />
+                            </div>
+                        </div>
+
+                        <div class="user-name">
+                            <div class="i">
+                                <i class="fa-solid fa-unlock"></i>
+                            </div>
+                            <div>
+                                <input type="password" id="confirmPassword" placeholder="Confirm Password" class="password" required />
+                            </div>
+                        </div>
+
+                        <div class="btn3">
+                            <button type="submit" class="Login-btn">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById("fullName").value;
+            const role = document.getElementById("role").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Validate passwords
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            // Retrieve existing users from localStorage
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+
+            // Check if the email is already registered
+            if (users[email]) {
+                alert("User already registered!");
+                return;
+            }
+
+            // Save new user to localStorage
+            users[email] = {
+                fullName,
+                role,
+                password
+            };
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Registration successful!");
+            document.getElementById("registrationForm").reset();
+            window.location.href = "login.html"; // Redirect to login page
+        });
+    </script>
+</body>
+
+</html>
